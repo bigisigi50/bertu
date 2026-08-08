@@ -137,7 +137,8 @@ Enable tab-completion for bertu commands:
 
 ```bash
 # Bash
-echo 'source <(bertu completion bash)' >> ~/.bashrc
+bertu completion bash > ~/.bertu-completion.bash
+echo 'source ~/.bertu-completion.bash' >> ~/.bashrc
 
 # Zsh
 echo 'source <(bertu completion zsh)' >> ~/.zshrc
