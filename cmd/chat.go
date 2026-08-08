@@ -58,11 +58,8 @@ func indexCodebase(ctx context.Context, dbPath string) error {
 		return err
 	}
 
-	// Create collection (using default local embedding function for simplicity if supported, or custom)
-	// Note: chromem-go requires an embedding function. We'll use a dummy/basic one or OpenAI if default not available.
-	// We will just use the default OpenAI embedding function with a dummy key for local testing or custom.
-	// Actually, let's just use the default embedding function provided by chromem.
-	collection, err := db.GetOrCreateCollection("codebase", nil, nil)
+	// Use our custom Gemini embedding function
+	collection, err := db.GetOrCreateCollection("codebase", nil, ai.GeminiEmbeddingFunc())
 	if err != nil {
 		return err
 	}
@@ -108,7 +105,7 @@ func answerQuestion(ctx context.Context, dbPath string, question string) error {
 		return fmt.Errorf("failed to open db (did you run with --init first?): %w", err)
 	}
 
-	collection := db.GetCollection("codebase", nil)
+	collection := db.GetCollection("codebase", ai.GeminiEmbeddingFunc())
 	if collection == nil {
 		return fmt.Errorf("collection not found. Please run with --init first")
 	}
