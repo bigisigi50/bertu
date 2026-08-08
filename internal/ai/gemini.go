@@ -57,7 +57,7 @@ func GeminiEmbeddingFunc() func(ctx context.Context, text string) ([]float32, er
 		}
 		defer client.Close()
 
-		em := client.EmbeddingModel("text-embedding-004")
+		em := client.EmbeddingModel("embedding-001")
 		res, err := em.EmbedContent(ctx, genai.Text(text))
 		if err != nil {
 			return nil, err
