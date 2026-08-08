@@ -85,6 +85,8 @@ Generated commit message:
 feat: add user authentication with JWT tokens
 ```
 
+**Under the hood:** It runs `git diff --cached` to grab your staged changes, sends the diff to Gemini 2.5 Flash, and prompts it to write a clean, standardized conventional commit message for you.
+
 ### Terminal Error Explainer
 
 Pipe any failing command into `bertu explain`:
@@ -105,6 +107,8 @@ The error indicates a missing dependency...
 Run 'npm install' to fix this.
 ```
 
+**Under the hood:** It reads the standard input (`stdin`) that you piped into it, sends the raw error text to Gemini 2.5 Flash, and asks the AI to explain the root cause and provide exact shell commands to fix it.
+
 ### Codebase Chatter
 
 First, index your project (run this once or after major code changes):
@@ -120,6 +124,10 @@ bertu chat "How does the authentication middleware work?"
 bertu chat "Where is the database connection configured?"
 bertu chat "What does the handleUpload function do?"
 ```
+
+**Under the hood:** 
+1. The `--init` flag reads all your local `.go` files, chunks them, and uses the `gemini-embedding-001` model to convert them into numerical vectors. These are saved locally in a `.chromem` folder.
+2. When you ask a question, it converts your query into a vector, finds the 5 most relevant code chunks using similarity search, and injects them into a prompt for Gemini 2.5 Flash to give you a highly accurate answer grounded in your own code.
 
 ---
 
