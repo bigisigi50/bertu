@@ -23,7 +23,7 @@ func GenerateContent(ctx context.Context, prompt string) (string, error) {
 	defer client.Close()
 
 	// Use the recommended model for general text tasks
-	model := client.GenerativeModel("gemini-1.5-pro")
+	model := client.GenerativeModel("gemini-2.5-flash")
 	resp, err := model.GenerateContent(ctx, genai.Text(prompt))
 	if err != nil {
 		return "", fmt.Errorf("failed to generate content: %v", err)
@@ -57,7 +57,7 @@ func GeminiEmbeddingFunc() func(ctx context.Context, text string) ([]float32, er
 		}
 		defer client.Close()
 
-		em := client.EmbeddingModel("embedding-001")
+		em := client.EmbeddingModel("gemini-embedding-001")
 		res, err := em.EmbedContent(ctx, genai.Text(text))
 		if err != nil {
 			return nil, err
